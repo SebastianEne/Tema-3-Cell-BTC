@@ -1,0 +1,42 @@
+______________________________________
+
+   Ene Sebastian 333CA		
+   sebastian.ene@cti.pub.ro
+
+	Tema 3 -ASC- Cell Arhitecture
+	
+   Compresie imagini lossy paralela 
+   	Block Truncation codding
+ 
+______________________________________
+
+
+Notes:
+
+		Am implementat tema folosind single buffering,
+		operatiile intensiv computationale se realizeaza
+		pe SPE-uri, am modificat codul serial si am 
+		eliminat iteratiile succesive pentru calulul
+		variabilelor care alcatuiau blocurile de dimensiune
+		8 X 8, asfel calculam intr-un singur ciclu for
+		bitplane-ul asociat blocului a si b;
+		
+		Am incercat transferul unui bloc mai mare de
+		date pentru a minimiza costul operatiilor de transfer
+		memorie prin DMA, un SPE la un moment dat se ocupa de
+		imagine.width / 8 blocuri de date la un singur transfer 
+		DMA. Adresa imaginii comprimate este pasata in structura
+		buffer_and_size alaturi de dimensiune imaginii.
+		
+		Un SPE la un moment de tip se ocupa de blocul de date
+		de la adresa spu_id * numar_blocuri(pe un transfer DMA) +
+		offset unde offset este deplasamentul fata de adresa 
+		imaginii. 
+		
+		Structura initiala pointers_t pe care o primeste
+		fiecare thread contine informatii despre latimea
+		imaginii, id-ul SPU-lui si adresa unei structuri 
+		cu informatii secundare struct buffer_and_size;
+		
+		
+   
